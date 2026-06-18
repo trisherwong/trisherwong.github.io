@@ -1,7 +1,3 @@
-<!-- Header animated banner -->
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1A5276,100:3B82F6&height=200&section=header&text=Trisher%20Wong&fontSize=52&fontColor=ffffff&fontAlignY=38&desc=Senior%20Software%20Developer%20%26%20Team%20Lead&descAlignY=58&descSize=18&descColor=AED6F1" width="100%"/>
-</div>
 
 <!-- Typing animation -->
 <div align="center">
