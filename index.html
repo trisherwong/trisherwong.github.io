@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chui Chui Wong — Senior Software Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0A0F1E;
+    --surface:   #111827;
+    --card:      #161D2F;
+    --border:    #1E2D4A;
+    --accent:    #3B82F6;
+    --accent2:   #06B6D4;
+    --text:      #E2E8F0;
+    --muted:     #64748B;
+    --subtle:    #94A3B8;
+    --white:     #FFFFFF;
+    --mono:      'Space Mono', monospace;
+    --sans:      'Space Grotesk', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,15,30,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--subtle);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 80px 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image:
+      linear-gradient(var(--accent) 1px, transparent 1px),
+      linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .hero-glow {
+    position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 900px; margin: 0 auto; position: relative; z-index: 1;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--mono); font-size: 0.78rem;
+    color: var(--accent); letter-spacing: 0.1em;
+    border: 1px solid rgba(59,130,246,0.3);
+    padding: 0.3rem 0.8rem; border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-role {
+    font-family: var(--mono); font-size: 1rem;
+    color: var(--subtle); margin-bottom: 1.5rem;
+    letter-spacing: 0.03em;
+  }
+  .hero-desc {
+    font-size: 1.1rem; color: var(--subtle);
+    max-width: 580px; line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.5rem; border-radius: 4px;
+    font-family: var(--sans); font-size: 0.9rem; font-weight: 600;
+    text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
+  }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+  }
+  .btn-primary:hover { background: #2563EB; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .stat-num {
+    font-family: var(--mono); font-size: 2rem; font-weight: 700;
+    color: var(--white); line-height: 1;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 900px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--mono); font-size: 0.75rem;
+    color: var(--accent); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700; color: var(--white);
+    letter-spacing: -0.01em; margin-bottom: 3rem;
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--surface); }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+    width: 1px; background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 3rem;
+    padding: 1.5rem; background: var(--card);
+    border: 1px solid var(--border); border-radius: 6px;
+    transition: border-color 0.2s;
+  }
+  .timeline-item:hover { border-color: rgba(59,130,246,0.4); }
+  .timeline-dot {
+    position: absolute; left: -2.45rem; top: 1.75rem;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--bg);
+  }
+  .timeline-meta {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;
+  }
+  .timeline-title { font-size: 1rem; font-weight: 600; color: var(--white); }
+  .timeline-company { font-size: 0.85rem; color: var(--accent); font-weight: 500; margin-top: 0.1rem; }
+  .timeline-period {
+    font-family: var(--mono); font-size: 0.75rem;
+    color: var(--muted); white-space: nowrap;
+    background: var(--border); padding: 0.2rem 0.6rem; border-radius: 2px;
+  }
+  .timeline-desc { font-size: 0.9rem; color: var(--subtle); margin-top: 0.75rem; line-height: 1.7; }
+  .timeline-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .tag {
+    font-family: var(--mono); font-size: 0.7rem;
+    background: rgba(59,130,246,0.1); color: var(--accent2);
+    border: 1px solid rgba(6,182,212,0.2);
+    padding: 0.2rem 0.5rem; border-radius: 2px;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.25rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: rgba(59,130,246,0.4); transform: translateY(-2px); }
+  .skill-card-title {
+    font-size: 0.8rem; font-weight: 600; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;
+  }
+  .skill-list { list-style: none; }
+  .skill-list li {
+    font-size: 0.88rem; color: var(--subtle); padding: 0.2rem 0;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .skill-list li::before { content: '▸'; color: var(--accent); font-size: 0.7rem; flex-shrink: 0; }
+
+  /* ── CERTS ── */
+  #certifications { background: var(--surface); }
+  .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .cert-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.5rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+    transition: border-color 0.2s;
+  }
+  .cert-card:hover { border-color: rgba(59,130,246,0.4); }
+  .cert-icon {
+    width: 40px; height: 40px; border-radius: 6px; flex-shrink: 0;
+    background: rgba(59,130,246,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .cert-name { font-size: 0.92rem; font-weight: 600; color: var(--white); margin-bottom: 0.2rem; }
+  .cert-issuer { font-size: 0.8rem; color: var(--accent); }
+  .cert-status {
+    display: inline-block; margin-top: 0.4rem;
+    font-family: var(--mono); font-size: 0.7rem;
+    padding: 0.15rem 0.5rem; border-radius: 2px;
+  }
+  .cert-status.active { background: rgba(34,197,94,0.1); color: #22C55E; border: 1px solid rgba(34,197,94,0.2); }
+  .cert-status.expired { background: rgba(100,116,139,0.1); color: var(--muted); border: 1px solid rgba(100,116,139,0.2); }
+
+  /* ── CONTACT ── */
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .contact-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.25rem;
+    text-decoration: none; display: flex; align-items: center; gap: 0.75rem;
+    transition: all 0.2s;
+  }
+  .contact-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .contact-icon { font-size: 1.3rem; }
+  .contact-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .contact-value { font-size: 0.88rem; color: var(--text); font-weight: 500; word-break: break-all; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono); font-size: 0.75rem; color: var(--muted);
+  }
+  footer span { color: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hero-stats { gap: 1.5rem; }
+    .timeline { padding-left: 1.5rem; }
+    .timeline-dot { left: -1.95rem; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">trisherwong.github.io</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1>Chui Chui<br/><span>Wong</span></h1>
+    <p class="hero-role">Senior Software Developer &amp; Team Lead</p>
+    <p class="hero-desc">
+      19+ years building scalable backend systems, integrating complex APIs,
+      and leading development teams across travel-tech, telco, and broadcasting.
+      Currently leading engineering at BusOnlineTicket.
+    </p>
+    <div class="hero-actions">
+      <a href="https://www.linkedin.com/in/trisher-wong/" target="_blank" class="btn btn-primary">
+        🔗 LinkedIn Profile
+      </a>
+      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">19<span>+</span></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">5<span>+</span></div>
+        <div class="stat-label">Developers Led</div>
+      </div>
+      <div>
+        <div class="stat-num">6<span>+</span></div>
+        <div class="stat-label">Companies</div>
+      </div>
+      <div>
+        <div class="stat-num">4<span>+</span></div>
+        <div class="stat-label">Platforms Shipped</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <p class="section-label reveal">Career</p>
+    <h2 class="section-title reveal">Work Experience</h2>
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <div>
+            <div class="timeline-title">Senior Software Developer — Team Lead</div>
+            <div class="timeline-company">BusOnlineTicket Sdn Bhd</div>
+          </div>
+          <div class="timeline-period">Mar 2018 – Present</div>
+        </div>
+        <p class="timeline-desc">
+          Leading a team of 5 developers across BusOnlineTicket.com, BusOnlineTicket.co.th,
+          operator websites, internal systems, and mobile apps. Restructured and centralised
+          backend systems, designed REST APIs for partners, integrated bus operator and payment
+          gateway APIs, and leveraged Google BigQuery for business reporting. Adopted Claude (Anthropic)
+          as a daily AI coding assistant to accelerate delivery and improve code quality.
+        </p>
+        <div class="timeline-tags">
+          <span class="tag">C# .NET</span><span class="tag">MySQL</span>
+          <span class="tag">REST API</span><span class="tag">Google BigQuery</span>
+          <span class="tag">Payment Gateways</span><span class="tag">Team Leadership</span>
+          <span class="tag">Claude AI</span>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <div>
+            <div class="timeline-title">Digital Lead — Hotlink Red App</div>
+            <div class="timeline-company">Maxis Broadband Sdn Bhd</div>
+          </div>
+          <div class="timeline-period">May 2016 – Aug 2017</div>
+        </div>
+        <p class="timeline-desc">
+          Led end-to-end delivery of the Hotlink Red mobile app. Served as SCRUM Master,
+          managed sprint planning via JIRA, oversaw QA lifecycle, and coordinated vendor
+          and budget management for outsourced components.
+        </p>
+        <div class="timeline-tags">
+          <span class="tag">Scrum Master</span><span class="tag">JIRA</span>
+          <span class="tag">Mobile App</span><span class="tag">QA Management</span>
+          <span class="tag">Vendor Coordination</span>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <div>
+            <div class="timeline-title">Development Lead (Senior Associate)</div>
+            <div class="timeline-company">Astro Berhad</div>
+          </div>
+          <div class="timeline-period">Sep 2009 – Apr 2016</div>
+        </div>
+        <p class="timeline-desc">
+          Led internal platform development for Customer Service, Billing, CRM, and Order
+          Management. Key projects include a Real-Time Payment Notification API (Hangfire +
+          ServiceStack), Customer Mapping Portal (Google Maps), Broadcast &amp; Resource
+          Management System, and Customer Information Portal (Oracle CRM integration).
+        </p>
+        <div class="timeline-tags">
+          <span class="tag">C# .NET</span><span class="tag">SQL Server</span>
+          <span class="tag">Hangfire</span><span class="tag">ServiceStack</span>
+          <span class="tag">jQuery</span><span class="tag">Oracle CRM</span>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <div>
+            <div class="timeline-title">Application Developer</div>
+            <div class="timeline-company">Exact ADC Sdn Bhd</div>
+          </div>
+          <div class="timeline-period">May 2007 – Aug 2009</div>
+        </div>
+        <p class="timeline-desc">
+          Delivered SOA and UI/UX projects for Exact Software's Synergy platform and
+          the @t-School education management system (Netherlands client). Built WCF services,
+          reusable UI components, and led technical design for a generic component framework.
+        </p>
+        <div class="timeline-tags">
+          <span class="tag">ASP.NET</span><span class="tag">WCF</span>
+          <span class="tag">Telerik</span><span class="tag">AJAX.NET</span><span class="tag">SOA</span>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <div>
+            <div class="timeline-title">Software Engineer</div>
+            <div class="timeline-company">Biztrak Sdn Bhd</div>
+          </div>
+          <div class="timeline-period">Jan 2006 – Apr 2007</div>
+        </div>
+        <p class="timeline-desc">
+          Developed core accounting modules for the ULTRA web-based system. Provided
+          technical direction to junior engineers and enhanced a customer database upgrade utility.
+        </p>
+        <div class="timeline-tags">
+          <span class="tag">VB.NET</span><span class="tag">SQL Server</span>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <div>
+            <div class="timeline-title">Analyst Programmer</div>
+            <div class="timeline-company">Qinovar Sdn Bhd</div>
+          </div>
+          <div class="timeline-period">May 2005 – Nov 2005</div>
+        </div>
+        <p class="timeline-desc">
+          Developed smart client and ASP.NET web applications for multiple client projects
+          including Sunway International Vacation Club.
+        </p>
+        <div class="timeline-tags">
+          <span class="tag">C# .NET</span><span class="tag">ASP.NET</span>
+          <span class="tag">Crystal Reports</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <p class="section-label reveal">Expertise</p>
+    <h2 class="section-title reveal">Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-card-title">Backend</div>
+        <ul class="skill-list">
+          <li>C# / .NET Core / ASP.NET</li>
+          <li>VB.NET</li>
+          <li>REST API Design</li>
+          <li>WCF / Web Services</li>
+          <li>ServiceStack / Hangfire</li>
+        </ul>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-title">Database</div>
+        <ul class="skill-list">
+          <li>MySQL</li>
+          <li>Microsoft SQL Server</li>
+          <li>Oracle PL/SQL</li>
+          <li>Google BigQuery</li>
+          <li>IBatis.Net</li>
+        </ul>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-title">Frontend</div>
+        <ul class="skill-list">
+          <li>JavaScript / jQuery</li>
+          <li>AJAX.NET</li>
+          <li>AjaxControlToolkit</li>
+          <li>Telerik UI</li>
+          <li>Crystal Reports</li>
+        </ul>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-title">Integration</div>
+        <ul class="skill-list">
+          <li>Payment Gateway APIs</li>
+          <li>Bus Operator APIs</li>
+          <li>Third-party API Design</li>
+          <li>Oracle CRM Integration</li>
+          <li>Mobile App Development</li>
+        </ul>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-title">Leadership & Process</div>
+        <ul class="skill-list">
+          <li>Team Leadership & Mentoring</li>
+          <li>Agile / Scrum</li>
+          <li>JIRA Sprint Planning</li>
+          <li>Code Review & QA</li>
+          <li>Production Support</li>
+        </ul>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-title">AI-Assisted Dev</div>
+        <ul class="skill-list">
+          <li>Claude (Anthropic)</li>
+          <li>AI Code Review</li>
+          <li>AI Debugging Workflows</li>
+          <li>Technical Documentation</li>
+          <li>Architecture Exploration</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-inner">
+    <p class="section-label reveal">Credentials</p>
+    <h2 class="section-title reveal">Certifications &amp; Education</h2>
+    <div class="cert-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon">🏅</div>
+        <div>
+          <div class="cert-name">Professional Scrum Master I (PSM I)</div>
+          <div class="cert-issuer">Scrum.org</div>
+          <span class="cert-status active">Active</span>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">📋</div>
+        <div>
+          <div class="cert-name">ITIL Foundation Certificate</div>
+          <div class="cert-issuer">AXELOS</div>
+          <span class="cert-status expired">Expired</span>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">🎓</div>
+        <div>
+          <div class="cert-name">Bachelor of Computer Science</div>
+          <div class="cert-issuer">APIIT — Internet Technology · 2005</div>
+          <span class="cert-status active">Degree</span>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">📚</div>
+        <div>
+          <div class="cert-name">Advanced Diploma — Computer Systems</div>
+          <div class="cert-issuer">APIIT · 2003</div>
+          <span class="cert-status active">Diploma</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label reveal">Let's connect</p>
+    <h2 class="section-title reveal">Get In Touch</h2>
+    <div class="contact-grid">
+      <a href="mailto:trisherccwong@hotmail.com" class="contact-card reveal">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">trisherccwong@hotmail.com</div>
+        </div>
+      </a>
+      <a href="tel:+60123583647" class="contact-card reveal">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">+60 12-358 3647</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/trisher-wong/" target="_blank" class="contact-card reveal">
+        <div class="contact-icon">🔗</div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">linkedin.com/in/trisher-wong</div>
+        </div>
+      </a>
+      <a href="https://www.busonlineticket.com" target="_blank" class="contact-card reveal">
+        <div class="contact-icon">🚌</div>
+        <div>
+          <div class="contact-label">Current Employer</div>
+          <div class="contact-value">busonlineticket.com</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built by <span>Chui Chui Wong</span> · Senior Software Developer · Malaysia
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
